@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@?/components/ui/button";
 import { ContentHeader } from "@?/components/ui/content_header";
 import { ArrowUpDown, CirclePlus, ExternalLink, Search } from "lucide-react";
@@ -12,6 +14,9 @@ import { Card } from "@?/components/ui/card";
 import { Input } from "@?/components/ui/input";
 import { FilterControl } from "@?/components/meter-management/filterSelect";
 import MeterManagementTable from "@?/components/meter-management/meter-management-table";
+import type { MeterInventoryItem } from "@?/types/meter-inventory";
+import { useState } from "react";
+import { AddMeterDialog } from "@?/components/meter-management/dialog/add-meter";
 
 const filterSections = [
     {
@@ -32,6 +37,13 @@ const filterSections = [
 ];
 
 export default function MeterManagement() {
+    const [selectedMeter, setSelectedMeter] = useState<MeterInventoryItem | null>(null);
+    const [isAddMeterDialogOpen, setIsAddMeterDialogOpen] = useState(false);
+    const handleSaveMeter = (meter: MeterInventoryItem) => {
+        setIsAddMeterDialogOpen(false);
+        setSelectedMeter(null);
+    };
+
     return (
         <div className="min-h-screen bg-transparent p-6">
             <div className="max-w-screen-4xl space-y-6">
@@ -55,6 +67,10 @@ export default function MeterManagement() {
                             </Button>
                             <Button
                                 size="lg"
+                                onClick={() => {
+                                    setSelectedMeter(null);
+                                    setIsAddMeterDialogOpen(true);
+                                }}
                                 className="flex w-full cursor-pointer items-center gap-2 bg-[#161CCA] font-medium text-white hover:bg-[#1e2abf] md:w-auto"
                             >
                                 <CirclePlus size={14} strokeWidth={2.3} className="h-4 w-4" />
@@ -124,9 +140,21 @@ export default function MeterManagement() {
                 </Card>
 
                 <div>
-                    <MeterManagementTable/>
+                    <MeterManagementTable />
                 </div>
             </div>
+
+            <AddMeterDialog
+                isOpen={isAddMeterDialogOpen}
+                onClose={() => {
+                    setIsAddMeterDialogOpen(false);
+                    setSelectedMeter(null);
+                }}
+                onSaveMeter={handleSaveMeter}
+                editMeter={selectedMeter}
+            />
         </div>
+
+
     )
 }
