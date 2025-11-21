@@ -4,15 +4,15 @@
 import { useState, useEffect, 
     // JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal 
 } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@?/components/ui/dialog";
-import { Button } from "@?/components/ui/button";
-import { Input } from "@?/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@?/components/ui/select";
-import { Label } from "@?/components/ui/label";
-import { Checkbox } from "@?/components/ui/checkbox";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 // import { useCreateMeter, useGetMeterManufactures, useUpdateMeter } from "@/hooks/use-meter";
 import { toast } from 'sonner'
-import type { MeterInventoryItem } from "@?/types/meter-inventory";
+import type { MeterInventoryItem } from "@/types/meter-inventory";
 
 interface AddMeterDialogProps {
   isOpen: boolean;
@@ -481,7 +481,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
               ></div>
             </div>
           )}
-          <DialogTitle className="text-lg font-normal text-gray-900">{dialogTitle}</DialogTitle>
+          <DialogTitle className="text-xl text-gray-900">{dialogTitle}</DialogTitle>
           <p className="text-gray-600 text-sm">
             {step === 1 ? "Basic Information" : step === 2 ? "Basic Parameter" : "Smart Parameter"}
           </p>
@@ -994,14 +994,14 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
               <Button
                 variant="outline"
                 onClick={onClose}
-                size="lg"
+                size="md"
                 className="text-sm font-medium text-[#161CCA] border-[#161CCA] hover:bg-gray-50"
               >
                 Cancel
               </Button>
               <Button
                 onClick={shouldShowNext ? handleNext : saveMeter}
-                size="lg"
+                size="md"
                 disabled={
                   !formData.meterNumber ||
                   !formData.simNumber ||
@@ -1028,14 +1028,14 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
               <Button
                 variant="outline"
                 onClick={handleBack}
-                size="lg"
+                size="md"
                 className="text-sm font-medium text-[#161CCA] border-[#161CCA] hover:bg-gray-50"
               >
                 Back
               </Button>
               <Button
                 onClick={handleNextFromStep2}
-                size="lg"
+                size="md"
                 disabled={
                   (formData.meterClass === "MD" &&
                     (!formData.ctRatioNum ||
@@ -1059,14 +1059,14 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
               <Button
                 variant="outline"
                 onClick={handleBack}
-                size="lg"
+                size="md"
                 className="text-sm font-medium text-[#161CCA] border-[#161CCA] hover:bg-gray-50 cursor-pointer"
               >
                 Back
               </Button>
               <Button
                 onClick={saveMeter}
-                size="lg"
+                size="md"
                 disabled={
                   (formData.smartStatus &&
                     (!formData.meterModel || !formData.protocol || !formData.authentication || !formData.password)) || isPending

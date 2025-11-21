@@ -2,10 +2,10 @@
 
 // import { useRouter } from "next/navigation";
 // import { useAuth } from "@/context/auth-context"; 
-import { SidebarNav } from "@?/components/sidebar-nav";
-import { SidebarProvider } from "@?/components/ui/sidebar";
-import { Navbar } from "@?/components/navbar";
-import { Loader } from "@?/components/ui/loader_animation";
+import { SidebarNav } from "@/components/sidebar-nav";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { Navbar } from "@/components/navbar";
+import { Loader } from "@/components/ui/loader_animation";
 import { useEffect, useState } from "react";
 
 

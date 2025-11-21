@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@?/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import type { RectangleProps } from "recharts";
 

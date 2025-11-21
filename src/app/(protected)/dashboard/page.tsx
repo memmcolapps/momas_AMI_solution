@@ -1,13 +1,13 @@
 'use client'
 
-import CommunicationSummaryChart from '@?/components/dashboard/Chart/communication_summary';
-import RealtimeCommunicationLogsChart from '@?/components/dashboard/Chart/realtime_logs_chart';
-import { FiltersOnly } from '@?/components/dashboard/filters';
-import OverviewCard from '@?/components/dashboard/overview_cards';
-import CommunicationReportTable from '@?/components/dashboard/Table/communication_report';
-import EventTable from '@?/components/dashboard/Table/event_table';
-import { Card } from '@?/components/ui/card';
-import { ContentHeader } from '@?/components/ui/content_header'
+import CommunicationSummaryChart from '@/components/dashboard/Chart/communication_summary';
+import RealtimeCommunicationLogsChart from '@/components/dashboard/Chart/realtime_logs_chart';
+import { FiltersOnly } from '@/components/dashboard/filters';
+import OverviewCard from '@/components/dashboard/overview_cards';
+import CommunicationReportTable from '@/components/dashboard/Table/communication_report';
+import EventTable from '@/components/dashboard/Table/event_table';
+import { Card } from '@/components/ui/card';
+import { ContentHeader } from '@/components/ui/content_header'
 import { Ban, CircleCheck, CircleCheckBig } from 'lucide-react';
 import React, { useState } from 'react'
 
