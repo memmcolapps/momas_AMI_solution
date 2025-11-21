@@ -158,7 +158,7 @@ const Meters = [
 
 export default function MeterManagementTable() {
     const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage] = useState(10);
 
     const totalData = Meters.length;
 
@@ -204,7 +204,7 @@ export default function MeterManagementTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {Meters.map((meter, index) => (
+                        {Meters.map((meter) => (
                                 
                             <TableRow key={meter.id} className="hover:bg-gray-50 border-gray-100">
                                     <TableCell className="px-4 py-4">
