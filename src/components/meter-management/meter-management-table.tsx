@@ -194,7 +194,7 @@ export default function MeterManagementTable() {
         smartStatus: undefined,
         smartMeterInfo: undefined,
         status: "",
-    } as MeterInventoryItem);
+    } as unknown as MeterInventoryItem);
 
     const handleSelectAll = (checked: boolean) => {
         if (checked) {
