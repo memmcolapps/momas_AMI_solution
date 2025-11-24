@@ -42,39 +42,39 @@ export function ViewMeterInfoDialog({ isOpen, onClose, meter }: ViewMeterInfoDia
                     <div className="grid gap-4 py-2 px-4">
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">Meter Number:</span>
-                            <span className="text-gray-900 font-bold">{meter.meterNo}</span>
+                            <span className="text-gray-800">{meter.meterNo}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">SIM No:</span>
-                            <span className="text-gray-900 font-bold">{meter.simNo}</span>
+                            <span className="text-gray-800">{meter.simNo}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">Customer Name:</span>
-                            <span className="text-gray-900 font-bold">{meter.name}</span>
+                            <span className="text-gray-800">{meter.name}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">Customer Address:</span>
-                            <span className="text-gray-900 font-bold">{meter.address}</span>
+                            <span className="text-gray-800">{meter.address}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">Business Hub:</span>
-                            <span className="text-gray-900 font-bold">{meter.businessHub}</span>
+                            <span className="text-gray-800">{meter.businessHub}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">Manufacturer:</span>
-                            <span className="text-gray-900 font-bold">{meter.manu}</span>
+                            <span className="text-gray-800">{meter.manu}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">Class:</span>
-                            <span className="text-gray-900 font-bold">{meter.class}</span>
+                            <span className="text-gray-800">{meter.class}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">Feeder:</span>
-                            <span className="text-gray-900 font-bold">{meter.feeder}</span>
+                            <span className="text-gray-800">{meter.feeder}</span>
                         </div>
                         <div className="grid grid-cols-[150px_1fr] items-center gap-16">
                             <span className="font-medium text-gray-700">DSS:</span>
-                            <span className="text-gray-900 font-bold">{meter.dss}</span>
+                            <span className="text-gray-800">{meter.dss}</span>
                         </div>
                     </div>
                 ) : (

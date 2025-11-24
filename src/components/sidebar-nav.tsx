@@ -68,7 +68,7 @@ const navItems: NavItemProps[] = [
             },
         ],
     },
-    { title: "Admin Management", href: "/admin_management", icon: Activity, hasSubmenu: false },
+    { title: "Admin Management", href: "/admin-management", icon: Activity, hasSubmenu: false },
     { title: "Audit Log", href: "/audit-log", icon: Activity, hasSubmenu: false },
 ];
 
