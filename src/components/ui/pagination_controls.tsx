@@ -7,14 +7,14 @@ import {
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
-} from "@?/components/ui/pagination";
+} from "@/components/ui/pagination";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@?/components/ui/select";
+} from "@/components/ui/select";
 
 export interface PaginationControlsProps {
   currentPage: number;

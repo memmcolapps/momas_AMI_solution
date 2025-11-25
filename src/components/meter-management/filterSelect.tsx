@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@?/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { ListFilter } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 

@@ -1,7 +1,7 @@
 "use client"; 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader } from "@?/components/ui/loader_animation";
+import { Loader } from "@/components/ui/loader_animation";
 
 export default function HomePage() {
   const router = useRouter();

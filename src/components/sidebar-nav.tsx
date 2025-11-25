@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useMemo } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
-import { cn } from "@?/lib/utils";
+import { cn } from "@/lib/utils";
 // import { useAuth } from "@/context/auth-context"; 
 
 interface NavItemProps {
