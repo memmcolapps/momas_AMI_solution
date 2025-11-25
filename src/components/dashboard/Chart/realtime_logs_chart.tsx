@@ -40,27 +40,6 @@ interface CustomTooltipProps {
   }>;
 }
 
-const renderTooltip = ({ active, payload }: CustomTooltipProps) => {
-  if (!active || !payload || payload.length === 0) return null;
-
-  const data = payload[0]?.payload;
-  const label = data?.timeLabel ?? data?.hour ?? 'Unknown';
-
-  return (
-    <div
-      style={{
-        backgroundColor: "#3b82f6",
-        color: "#FFFFFF",
-        padding: "8px",
-        borderRadius: "4px",
-        fontSize: 12,
-        boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-      }}
-    >
-      <p>{`${label}: ${data?.value}`}</p>
-    </div>
-  );
-};
 
 const RealtimeCommunicationLogsChart = ({ title, data }: LineChartProps) => {
   const chartData = React.useMemo(() => {

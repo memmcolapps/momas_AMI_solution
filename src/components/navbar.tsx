@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
 import { useState } from "react";
@@ -129,7 +127,7 @@ export const UserDropdown = ({ isLoading, openEditProfileModal, openChangePasswo
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex cursor-pointer items-center gap-2 rounded-full px-4 py-5 hover:bg-gray-100 focus:outline-none focus:ring-gray-100/10"
+          className="flex border-0 cursor-pointer items-center gap-2 rounded-full px-4 py-5 hover:bg-gray-100 focus:outline-none focus:ring-gray-100/10"
         >
           <UserAvatar />
           <ChevronDown className="text-gray-500" size={16} />
