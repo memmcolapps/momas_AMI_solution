@@ -43,8 +43,8 @@ interface CustomTooltipProps {
 const renderTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (!active || !payload || payload.length === 0) return null;
 
-  const data = payload[0].payload;
-  const label = data.timeLabel ?? data.hour ?? 'Unknown';
+  const data = payload[0]?.payload;
+  const label = data?.timeLabel ?? data?.hour ?? 'Unknown';
 
   return (
     <div
@@ -57,7 +57,7 @@ const renderTooltip = ({ active, payload }: CustomTooltipProps) => {
         boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
       }}
     >
-      <p>{`${label}: ${data.value}`}</p>
+      <p>{`${label}: ${data?.value}`}</p>
     </div>
   );
 };
@@ -93,7 +93,7 @@ const RealtimeCommunicationLogsChart = ({ title, data }: LineChartProps) => {
               stroke="#888"
               tick={{ fontSize: 12 }}
             />
-            <Tooltip content={renderTooltip} />
+            <Tooltip />
             <Line
               type="monotone"
               dataKey="value"
