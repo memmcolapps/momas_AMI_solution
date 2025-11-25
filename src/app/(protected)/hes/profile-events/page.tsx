@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SquareArrowOutUpRight, Check, ChevronDown } from "lucide-react";
 import { ContentHeader } from "@/components/ui/content_header";
-import { Profile } from "@/components/profile-events/profile";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Events from "@/components/profile-events/events";
+import Profile from "@/components/profile-events/profile";
 
 type ExportFormat = "CSV" | "XLSX" | "PDF" | null;
 
@@ -25,19 +25,14 @@ export default function HesProfileEvents() {
 
   const handleExportFormatSelect = (format: ExportFormat) => {
     setSelectedExportFormat(format);
-    // Here you can add the actual export logic based on the format
     console.log(`Exporting as ${format}...`);
 
-    // Add your export logic here
     switch (format) {
       case "CSV":
-        // Handle CSV export
         break;
       case "XLSX":
-        // Handle XLSX export
         break;
       case "PDF":
-        // Handle PDF export
         break;
       default:
         break;
@@ -112,7 +107,7 @@ export default function HesProfileEvents() {
 
       {/* Tabs Card */}
       <Card className="mb-4 border-none bg-transparent p-4 shadow-none">
-        <Tabs defaultValue="events" className="w-full">
+        <Tabs defaultValue="profile" className="w-full">
           <div className="flex justify-between pb-5 items-center">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
               <TabsList style={{ border: "2px solid #161CCA" }} className="h-12">
