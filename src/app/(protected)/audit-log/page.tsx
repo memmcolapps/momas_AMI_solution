@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ContentHeader } from "@/components/ui/content_header";
-import { ArrowUpDown, CirclePlus, Search } from "lucide-react";
+import { ArrowUpDown, Search } from "lucide-react";
 
 import {
     DropdownMenu,
@@ -14,8 +14,9 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { FilterControl } from "@/components/meter-management/filterSelect";
 import { useState } from "react";
-import AdminManagementTable, { type UserData } from "@/components/admin-management/admin-management-table";
+import { type UserData } from "@/components/admin-management/admin-management-table";
 import { AddUserDialog } from "@/components/admin-management/dialog/add-edit-user-dialog";
+import { AuditLogTable } from "@/components/audit-log/audit-log-table";
 
 const filterSections = [
     {
@@ -35,7 +36,7 @@ const filterSections = [
     },
 ];
 
-export default function AdminManagement() {
+export default function AuditLog() {
     const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
     const [isAddUserDialogOpen, setIsAddUserDialogOpen] = useState(false);
     const handleSaveUser = (user: UserData) => {
@@ -49,26 +50,9 @@ export default function AdminManagement() {
                 <div className="flex items-center justify-between">
                     {/* Header  */}
                     <ContentHeader
-                        title="Admin Management"
-                        description="Manage your team members and their group permissions here."
+                        title="Audit Log"
+                        description="Track system events and user actions for security and accountability here."
                     />
-
-                    {/* Buttons  */}
-                    <div className="flex items-center justify-between">
-                        <div className="flex">
-                            <Button
-                                size="lg"
-                                onClick={() => {
-                                    setSelectedUser(null);
-                                    setIsAddUserDialogOpen(true);
-                                }}
-                                className="flex w-full cursor-pointer items-center gap-2 bg-[#161CCA] font-medium text-white hover:bg-[#1e2abf] md:w-auto"
-                            >
-                                <CirclePlus size={14} strokeWidth={2.3} className="h-4 w-4" />
-                                <span className="text-sm md:text-base">Add User</span>
-                            </Button>
-                        </div>
-                    </div>
                 </div>
 
                 <Card className="border-none bg-transparent p-4 shadow-none">
@@ -119,11 +103,10 @@ export default function AdminManagement() {
                             </DropdownMenu>
                         </div>
                     </div>
-
                 </Card>
 
                 <div>
-                    <AdminManagementTable />
+                    <AuditLogTable />
                 </div>
             </div>
 
