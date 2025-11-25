@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-transparent p-6">
-      <div className="max-w-screen-2xl space-y-6">
+      <div className="max-w-screen-4xl space-y-6">
         <div className="flex items-start justify-between">
           <ContentHeader
             title="Overview"
