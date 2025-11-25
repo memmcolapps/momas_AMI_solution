@@ -1,10 +1,9 @@
-// components/CalendarPopover.tsx
 import { Button } from "@/components/ui/button";
 import { PopoverContent } from "@/components/ui/popover";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Calendar } from "@/components/ui/blue-calendar";
 
-interface CalendarPopoverProps {
+interface BlueCalendarProps {
   date: Date | undefined;
   month: Date;
   onDateSelect: (date: Date | undefined) => void;
@@ -13,14 +12,14 @@ interface CalendarPopoverProps {
   today: Date;
 }
 
-export function CalendarPopover({
+export function BlueCalendar({
   date,
   month,
   onDateSelect,
   onMonthChange,
   onClose,
   today,
-}: CalendarPopoverProps) {
+}: BlueCalendarProps) {
   const handlePrevMonth = () => {
     const prev = new Date(month);
     prev.setMonth(month.getMonth() - 1);

@@ -330,6 +330,7 @@ export function CommunicationTable({
           </div>
           <div className="mt-4 flex justify-between gap-2">
             <Button
+              size={"md"}
               variant="outline"
               className="cursor-pointer border-[#161CCA] text-[#161CCA]"
               onClick={() => {
@@ -340,6 +341,7 @@ export function CommunicationTable({
               Cancel
             </Button>
             <Button
+              size={"md"}
               className="cursor-pointer bg-[#161CCA] text-white"
               onClick={handleTokenSubmit}
               disabled={token.length === 0}
