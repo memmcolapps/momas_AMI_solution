@@ -119,7 +119,6 @@ export default function AdminManagement() {
                             </DropdownMenu>
                         </div>
                     </div>
-
                 </Card>
 
                 <div>

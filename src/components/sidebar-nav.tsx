@@ -45,7 +45,7 @@ const navItems: NavItemProps[] = [
         icon: Cylinder,
         hasSubmenu: true,
         submenuItems: [
-            { title: "Profile and Events", href: "/profile_events" },
+            { title: "Profile and Events", href: "/hes/profile-events" },
             { title: "Communication Report", href: "/communication_report" },
             {
                 title: "Realtime Data",
@@ -86,11 +86,9 @@ const hardcodedUser = {
                 name: "HES",
                 access: true,
                 subModules: [
-                    { name: "Dashboard", access: true },
-                    { name: "Organization", access: true },
-                    { name: "Meter Management", access: true },
-                    { name: "Customer Management", access: true },
-                    { name: "Band Management", access: true },
+                    { name: "Profile and Events", access: true },
+                    { name: "Communication Report", access: true },
+                    { name: "Controls and Configuration", access: true },
                 ],
             },
       { name: "HES", access: true, subModules: [] },
