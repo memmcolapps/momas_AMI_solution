@@ -263,11 +263,7 @@ export default function MeterRemoteConfigPage() {
   const [showOfflineDialog, setShowOfflineDialog] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [rowsPerPage] = useState<number>(10);
-  const [meterData] = useState<Meter[]>(initialMeterData);
-
-  const [modifiedData, setModifiedData] = useState<Map<string, Meter>>(
-    new Map(),
-  );
+  const [meterData, setMeterData] = useState<Meter[]>(initialMeterData);
   const [selectedRow, setSelectedRow] = useState<Meter | null>(null);
 
   const handlePageSizeChange = () => {
@@ -403,11 +399,13 @@ export default function MeterRemoteConfigPage() {
         relayControl: "Connected",
       };
 
-      setModifiedData((prev) => {
-        const newMap = new Map(prev);
-        newMap.set(sN, updatedMeter);
-        return newMap;
-      });
+      setMeterData((prev) =>
+        prev.map((m) =>
+          m.sN === sN
+            ? { ...m, status: "Online", relayControl: "Connected" }
+            : m,
+        ),
+      );
 
       if (selectedRow?.sN === sN) {
         setSelectedRow(updatedMeter);
@@ -427,11 +425,13 @@ export default function MeterRemoteConfigPage() {
         relayControl: "Disconnected",
       };
 
-      setModifiedData((prev) => {
-        const newMap = new Map(prev);
-        newMap.set(sN, updatedMeter);
-        return newMap;
-      });
+      setMeterData((prev) =>
+        prev.map((m) =>
+          m.sN === sN
+            ? { ...m, status: "Offline", relayControl: "Disconnected" }
+            : m,
+        ),
+      );
 
       if (selectedRow?.sN === sN) {
         setSelectedRow(updatedMeter);
