@@ -33,7 +33,7 @@ export function ViewMeterInfoDialog({ isOpen, onClose, meter }: ViewMeterInfoDia
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="md:max-w-2xl py-10 h-fit w-full overflow-hidden bg-white rounded-lg">
                 <DialogHeader>
-                    <DialogTitle className="text-xl font-semibold">Meter Details</DialogTitle>
+                    <DialogTitle className="text-xl">Meter Details</DialogTitle>
                     <DialogDescription className="text-sm text-gray-500">
                         View complete information about this meter
                     </DialogDescription>

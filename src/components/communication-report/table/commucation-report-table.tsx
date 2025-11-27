@@ -53,20 +53,24 @@ export function CommunicationTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const [modifiedData, setModifiedData] = useState<
+    Map<string, CommunicationReportData>
+  >(new Map());
+
   const isLoading = false;
 
   // Filter data by activeTab (MD or Non-MD)
   const tabFilteredData = useMemo(() => {
+    const baseData = communicationReportMergedDummyData.map((item) => {
+      return modifiedData.get(item.serialNumber) ?? item;
+    });
+
     if (activeTab === "MD") {
-      return communicationReportMergedDummyData.filter((item) =>
-        item.serialNumber.startsWith("SNMD"),
-      );
+      return baseData.filter((item) => item.serialNumber.startsWith("SNMD"));
     } else {
-      return communicationReportMergedDummyData.filter((item) =>
-        item.serialNumber.startsWith("SNNMD"),
-      );
+      return baseData.filter((item) => item.serialNumber.startsWith("SNNMD"));
     }
-  }, [activeTab]);
+  }, [activeTab, modifiedData]);
 
   // Apply search filter
   const filteredData = useMemo(() => {
@@ -117,11 +121,55 @@ export function CommunicationTable({
   };
 
   const handleConnectRelay = (serialNumber: string) => {
-    toast.success(`Successfully connected relay for meter ${serialNumber}`);
+    const meterData = paginatedData.find(
+      (item) => item.serialNumber === serialNumber,
+    );
+
+    if (meterData) {
+      const updatedMeter = {
+        ...meterData,
+        status: "Online",
+        relayControl: "Connected",
+      };
+
+      setModifiedData((prev) => {
+        const newMap = new Map(prev);
+        newMap.set(serialNumber, updatedMeter);
+        return newMap;
+      });
+
+      if (selectedRow?.serialNumber === serialNumber) {
+        setSelectedRow(updatedMeter);
+      }
+
+      toast.success(`Successfully connected relay for meter ${serialNumber}`);
+    }
   };
 
   const handleDisconnectRelay = (serialNumber: string) => {
-    toast.error(`Successfully disconnected relay for meter ${serialNumber}`);
+    const meterData = paginatedData.find(
+      (item) => item.serialNumber === serialNumber,
+    );
+
+    if (meterData) {
+      const updatedMeter = {
+        ...meterData,
+        status: "Offline",
+        relayControl: "Disconnected",
+      };
+
+      setModifiedData((prev) => {
+        const newMap = new Map(prev);
+        newMap.set(serialNumber, updatedMeter);
+        return newMap;
+      });
+
+      if (selectedRow?.serialNumber === serialNumber) {
+        setSelectedRow(updatedMeter);
+      }
+
+      toast.error(`Successfully disconnected relay for meter ${serialNumber}`);
+    }
   };
 
   const handleSendToken = (serialNumber: string) => {
@@ -220,13 +268,13 @@ export function CommunicationTable({
                         size="icon"
                         className="p-0 focus:ring-gray-300/20"
                       >
-                        <EllipsisVertical className="h-4 w-4" size={14} />
+                        <EllipsisVertical className="h-4 w-4" size={12} />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-full p-3 shadow-lg">
-                      {row.relayControl === "Disconnected" ? (
+                    <DropdownMenuContent className="w-full shadow-lg">
+                      {row.status === "Offline" ? (
                         <DropdownMenuItem
-                          className="cursor-pointer"
+                          className="cursor-pointer py-3"
                           onClick={() => handleConnectRelay(row.serialNumber)}
                         >
                           <CircleCheck size={14} className="mr-2" /> Connect
@@ -235,7 +283,7 @@ export function CommunicationTable({
                       ) : (
                         <>
                           <DropdownMenuItem
-                            className="cursor-pointer"
+                            className="cursor-pointer py-3"
                             onClick={() =>
                               handleDisconnectRelay(row.serialNumber)
                             }
@@ -243,8 +291,10 @@ export function CommunicationTable({
                             <BanIcon size={14} className="mr-2" /> Disconnect
                             Relay
                           </DropdownMenuItem>
+                          <hr className="border-gray-200" />
+
                           <DropdownMenuItem
-                            className="cursor-pointer"
+                            className="cursor-pointer py-3"
                             onClick={() => handleSendToken(row.serialNumber)}
                           >
                             <SendIcon size={14} className="mr-2" /> Send Token
@@ -293,6 +343,12 @@ export function CommunicationTable({
               <div className="grid grid-cols-2 gap-2">
                 <Label>Status:</Label>
                 <span className="font-semibold">{selectedRow.status}</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Label>Relay Control:</Label>
+                <span className="font-semibold">
+                  {selectedRow.relayControl}
+                </span>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <Label>Last Sync:</Label>

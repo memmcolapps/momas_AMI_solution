@@ -62,7 +62,7 @@ const navItems: NavItemProps[] = [
                     },
                     {
                         title: "Meter Remote Configuration",
-                        href: "/meter-remote-configuration",
+                        href: "/hes/meter-remote-config",
                     },
                 ],
             },

@@ -530,7 +530,7 @@ export default function DataCollScheduler() {
                             className="cursor-pointer border-gray-200 focus:ring-gray-500/0"
                           >
                             <MoreVertical
-                              size={16}
+                              size={12}
                               className="border-gray-200 text-gray-500"
                             />
                           </Button>
@@ -551,7 +551,7 @@ export default function DataCollScheduler() {
                             {item.status === "Paused" ? (
                               <>
                                 <Play size={14} className="text-gray-500" />
-                                <span className="text-sm text-black">
+                                <span className="text-sm py-2 text-black">
                                   Continue Schedule
                                 </span>
                               </>
@@ -561,21 +561,25 @@ export default function DataCollScheduler() {
                                   size={14}
                                   className="text-gray-500"
                                 />
-                                <span className="text-sm text-black">
+                                <span className="text-sm py-2 text-black">
                                   Pause Schedule
                                 </span>
                               </>
                             )}
                           </DropdownMenuItem>
+                          <hr className="border-gray-200" />
+
                           <DropdownMenuItem
                             className="flex cursor-pointer items-center gap-2"
                             onClick={() => openEditDialog(item.sNo)}
                           >
                             <Pencil size={14} className="text-gray-500" />
-                            <span className="text-sm text-black">
+                            <span className="text-sm py-2 text-black">
                               Edit Sync Schedule
                             </span>
                           </DropdownMenuItem>
+                          <hr className="border-gray-200" />
+
                           <DropdownMenuItem
                             className="flex cursor-pointer items-center gap-2"
                             onClick={() =>
@@ -583,7 +587,7 @@ export default function DataCollScheduler() {
                             }
                           >
                             <Trash2 size={14} className="text-gray-500" />
-                            <span className="text-sm whitespace-nowrap text-black">
+                            <span className="text-sm py-2 whitespace-nowrap text-black">
                               Delete Sync Schedule
                             </span>
                           </DropdownMenuItem>
