@@ -58,7 +58,7 @@ const navItems: NavItemProps[] = [
                 submenuItems: [
                     {
                         title: "Data Collection Scheduler",
-                        href: "/data-collection-scheduler",
+                        href: "/hes/data-collection-scheduler",
                     },
                     {
                         title: "Meter Remote Configuration",
