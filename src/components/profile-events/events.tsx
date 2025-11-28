@@ -41,10 +41,10 @@ interface EventData {
   id: number;
   sn: string;
   meterNo: string;
-  feeder: string;
+  feeder?: string;
   time: string;
   eventType: string;
-  event: string;
+  event?: string;
 }
 
 // Event data organized by event type
