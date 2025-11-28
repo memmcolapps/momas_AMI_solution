@@ -36,7 +36,7 @@ import EditSyncScheduleDialog from "@/components/data-collection-scheduler/dialo
 import { PaginationControls } from "@/components/ui/pagination_controls";
 
 // Define the shape of the filter object using Record
-type FilterType = Record<string, string | boolean>;
+export type FilterType = Record<string, string | boolean>;
 
 // Define the shape of the sync schedule data
 interface SyncScheduleData {
