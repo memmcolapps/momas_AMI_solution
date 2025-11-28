@@ -46,23 +46,23 @@ const navItems: NavItemProps[] = [
         hasSubmenu: true,
         submenuItems: [
             { title: "Profile and Events", href: "/hes/profile-events" },
-            { title: "Communication Report", href: "/communication_report" },
+            { title: "Communication Report", href: "/hes/communication-report" },
             {
                 title: "Realtime Data",
-                href: "/realtime_data",
+                href: "/hes/realtime-data",
             },
             {
                 title: "Controls and Configuration",
-                href: "/controls_configuration",
+                href: "/hes/controls-configuration",
                 hasSubmenu: true,
                 submenuItems: [
                     {
                         title: "Data Collection Scheduler",
-                        href: "/data_collection_scheduler",
+                        href: "/data-collection-scheduler",
                     },
                     {
                         title: "Meter Remote Configuration",
-                        href: "/meter_remote_configuration",
+                        href: "/meter-remote-configuration",
                     },
                 ],
             },
