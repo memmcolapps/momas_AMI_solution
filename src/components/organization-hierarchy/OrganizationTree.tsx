@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import OrganizationNode from "./OrganizationNode";
 import { Loader } from "../ui/loader_animation";
 import { DUMMY_NODES } from "../profile-events/data/data";
+import OrganizationNode from "./OrganizationNode";
 
 
 const OrganizationalTree = () => {

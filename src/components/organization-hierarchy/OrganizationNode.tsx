@@ -71,7 +71,6 @@ const getNormalizedDisplayType = (type?: string): string => {
   return type;
 };
 
-// OrganizationNode Component with dialogs
 interface OrganizationNodeProps {
   node: Node;
   level?: number;
@@ -224,4 +223,4 @@ const OrganizationalTree = () => {
   );
 };
 
-export default OrganizationalTree;
+export default OrganizationNode;
