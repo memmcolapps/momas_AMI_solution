@@ -1,17 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { useState, useEffect, 
-    // JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal 
+import {
+  useState,
+  useEffect,
+  // JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal
 } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 // import { useCreateMeter, useGetMeterManufactures, useUpdateMeter } from "@/hooks/use-meter";
-import { toast } from 'sonner'
+import { toast } from "sonner";
 import type { MeterInventoryItem } from "@/types/meter-inventory";
 
 interface AddMeterDialogProps {
@@ -21,10 +35,17 @@ interface AddMeterDialogProps {
   editMeter?: MeterInventoryItem | null;
 }
 
-export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddMeterDialogProps) {
+export function AddMeterDialog({
+  isOpen,
+  onClose,
+  onSaveMeter,
+  editMeter,
+}: AddMeterDialogProps) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     id: "",
+    customerName: "",
+    customerAddress: "",
     meterNumber: "",
     simNumber: "",
     meterCategory: "",
@@ -51,7 +72,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
     initialReading: "",
     dial: "",
     longitude: "",
-    latitude: ""
+    latitude: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -60,7 +81,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
   // const { mutateAsync: createMeter, isPending: isCreatePending } = useCreateMeter();
   // const { mutateAsync: updateMeter, isPending: isUpdatePending } = useUpdateMeter();
   // const isPending = isCreatePending || isUpdatePending;
-  
+
   // HARDCODED: Simulating pending state
   const isPending = false;
 
@@ -69,12 +90,15 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
     if (editMeter && isOpen) {
       setFormData({
         id: editMeter.id ?? "",
+        customerName: editMeter.customerName ?? "",
+        customerAddress: editMeter.customerAddress ?? "",
         meterNumber: editMeter.meterNumber ?? "",
         simNumber: editMeter.simNumber ?? "",
         meterCategory: editMeter.meterCategory ?? "",
         meterClass: editMeter.meterClass ?? "",
         meterType: editMeter.meterType ?? "",
-        meterManufacturer: editMeter.meterManufacturer ?? editMeter.manufacturer?.id ?? "",
+        meterManufacturer:
+          editMeter.meterManufacturer ?? editMeter.manufacturer?.id ?? "",
         oldSgc: editMeter.oldSgc ?? "",
         newSgc: editMeter.newSgc ?? "",
         oldKrn: editMeter.oldKrn ?? "",
@@ -95,7 +119,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
         initialReading: editMeter.mdMeterInfo?.initialReading ?? "",
         dial: editMeter.mdMeterInfo?.dial ?? "",
         longitude: editMeter.mdMeterInfo?.longitude ?? "",
-        latitude: editMeter.mdMeterInfo?.latitude ?? ""
+        latitude: editMeter.mdMeterInfo?.latitude ?? "",
       });
       setStep(1);
       setErrors({});
@@ -103,6 +127,8 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
       // Reset form for "Add new meter"
       setFormData({
         id: "",
+        customerName: "",
+        customerAddress: "",
         meterNumber: "",
         simNumber: "",
         meterCategory: "",
@@ -129,7 +155,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
         initialReading: "",
         dial: "",
         longitude: "",
-        latitude: ""
+        latitude: "",
       });
       setStep(1);
       setErrors({});
@@ -138,18 +164,23 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
 
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.meterNumber) newErrors.meterNumber = "Meter Number is required";
+    if (!formData.meterNumber)
+      newErrors.meterNumber = "Meter Number is required";
     if (!formData.simNumber) newErrors.simNumber = "Sim Card is required";
-    if (!formData.meterCategory) newErrors.meterCategory = "Meter Category is required";
+    if (!formData.meterCategory)
+      newErrors.meterCategory = "Meter Category is required";
     if (!formData.meterClass) newErrors.meterClass = "Meter Class is required";
     if (!formData.meterType) newErrors.meterType = "Meter Type is required";
-    if (!formData.meterManufacturer) newErrors.meterManufacturer = "Meter Manufacturer is required";
+    if (!formData.meterManufacturer)
+      newErrors.meterManufacturer = "Meter Manufacturer is required";
     if (!formData.oldSgc) newErrors.oldSgc = "Old SGC is required";
     if (!formData.newSgc) newErrors.newSgc = "New SGC is required";
     if (!formData.oldKrn) newErrors.oldKrn = "Old KRN is required";
     if (!formData.newKrn) newErrors.newKrn = "New KRN is required";
-    if (!formData.oldTariffIndex) newErrors.oldTariffIndex = "Old Tariff Index is required";
-    if (!formData.newTariffIndex) newErrors.newTariffIndex = "New Tariff Index is required";
+    if (!formData.oldTariffIndex)
+      newErrors.oldTariffIndex = "Old Tariff Index is required";
+    if (!formData.newTariffIndex)
+      newErrors.newTariffIndex = "New Tariff Index is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -158,13 +189,19 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
   const validateStep2 = () => {
     const newErrors: Record<string, string> = {};
     if (formData.meterClass === "MD") {
-      if (!formData.ctRatioNum) newErrors.ctRatioNum = "CT Ratio Numerator is required";
-      if (!formData.ctRatioDenom) newErrors.ctRatioDenom = "CT Ratio Denominator is required";
-      if (!formData.voltRatioNum) newErrors.voltRatioNum = "Voltage Ratio Numerator is required";
-      if (!formData.voltRatioDenom) newErrors.voltRatioDenom = "Voltage Ratio Denominator is required";
+      if (!formData.ctRatioNum)
+        newErrors.ctRatioNum = "CT Ratio Numerator is required";
+      if (!formData.ctRatioDenom)
+        newErrors.ctRatioDenom = "CT Ratio Denominator is required";
+      if (!formData.voltRatioNum)
+        newErrors.voltRatioNum = "Voltage Ratio Numerator is required";
+      if (!formData.voltRatioDenom)
+        newErrors.voltRatioDenom = "Voltage Ratio Denominator is required";
       if (!formData.multiplier) newErrors.multiplier = "Multiplier is required";
-      if (!formData.meterRating) newErrors.meterRating = "Meter Rating is required";
-      if (!formData.initialReading) newErrors.initialReading = "Initial Reading is required";
+      if (!formData.meterRating)
+        newErrors.meterRating = "Meter Rating is required";
+      if (!formData.initialReading)
+        newErrors.initialReading = "Initial Reading is required";
       if (!formData.dial) newErrors.dial = "Dial is required";
       if (!formData.longitude) newErrors.longitude = "Longitude is required";
       if (!formData.latitude) newErrors.latitude = "Latitude is required";
@@ -176,9 +213,11 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
   const validateStep3 = () => {
     const newErrors: Record<string, string> = {};
     if (formData.smartStatus) {
-      if (!formData.meterModel) newErrors.meterModel = "Meter Model is required";
+      if (!formData.meterModel)
+        newErrors.meterModel = "Meter Model is required";
       if (!formData.protocol) newErrors.protocol = "Protocol is required";
-      if (!formData.authentication) newErrors.authentication = "Authentication is required";
+      if (!formData.authentication)
+        newErrors.authentication = "Authentication is required";
       if (!formData.password) newErrors.password = "Password is required";
     }
     setErrors(newErrors);
@@ -304,14 +343,13 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
         console.error("Update meter error:", error);
       }
       */
-      
+
       // HARDCODED: Simulating successful update
       console.log("Update meter payload:", formData);
-    //   toast.success("Meter updated successfully!", {
-    //     duration: 3000,
-    //   });
+      //   toast.success("Meter updated successfully!", {
+      //     duration: 3000,
+      //   });
       onClose();
-
     } else {
       // COMMENTED OUT: Create meter API call
       /*
@@ -400,18 +438,20 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
         console.error("Save meter error:", error);
       }
       */
-      
+
       // HARDCODED: Simulating successful creation
       console.log("Create meter payload:", formData);
-    //   toast.success("Meter saved successfully!", {
-    //     duration: 3000,
-    //   });
+      //   toast.success("Meter saved successfully!", {
+      //     duration: 3000,
+      //   });
       onClose();
-      
+
       // Reset form data
       setStep(1);
       setFormData({
         id: "",
+    customerName: "",
+    customerAddress: "",
         meterNumber: "",
         simNumber: "",
         meterCategory: "",
@@ -443,19 +483,19 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
       setErrors({});
     }
   };
-  
+
   // COMMENTED OUT: API hook for manufacturers
   // const { data: manufacturers, isLoading: isManufacturersLoading, error: manufacturersError } = useGetMeterManufactures();
-  
+
   // HARDCODED: Sample manufacturers data
   const manufacturers = [
     { id: "1", name: "Schneider Electric" },
     { id: "2", name: "Siemens" },
     { id: "3", name: "ABB" },
     { id: "4", name: "General Electric" },
-    { id: "5", name: "Landis+Gyr" }
+    { id: "5", name: "Landis+Gyr" },
   ];
-  
+
   const dialogTitle = editMeter ? "Edit Meter" : "Add new meter";
 
   const shouldShowNext = formData.meterClass === "MD" || formData.smartStatus;
@@ -468,30 +508,91 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
     step1ButtonText = shouldShowNext ? "Next" : "Add Meter";
   }
 
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="md:max-w-2xl py-10 h-fit bg-white p-6 rounded-lg">
+      <DialogContent className="h-fit rounded-lg bg-white p-6 py-10 md:max-w-2xl">
         <DialogHeader className="flex flex-col">
-          {(formData.meterClass === "MD" || formData.smartStatus || (editMeter && formData.meterClass === "MD")) && (
-            <div className="w-full h-2 bg-gray-200 rounded-full mb-4 mt-6">
+          {(formData.meterClass === "MD" ||
+            formData.smartStatus ||
+            (editMeter && formData.meterClass === "MD")) && (
+            <div className="mt-6 mb-4 h-2 w-full rounded-full bg-gray-200">
               <div
-                className={`h-full bg-[#161CCA] rounded-full transition-all duration-300 ${step === 1 ? "w-1/3" : step === 2 ? "w-2/3" : "w-full"
-                  }`}
+                className={`h-full rounded-full bg-[#161CCA] transition-all duration-300 ${
+                  step === 1 ? "w-1/3" : step === 2 ? "w-2/3" : "w-full"
+                }`}
               ></div>
             </div>
           )}
-          <DialogTitle className="text-xl text-gray-900">{dialogTitle}</DialogTitle>
-          <p className="text-gray-600 text-sm">
-            {step === 1 ? "Basic Information" : step === 2 ? "Basic Parameter" : "Smart Parameter"}
+          <DialogTitle className="text-xl text-gray-900">
+            {dialogTitle}
+          </DialogTitle>
+          <p className="text-sm text-gray-600">
+            {step === 1
+              ? "Basic Information"
+              : step === 2
+                ? "Basic Parameter"
+                : "Smart Parameter"}
           </p>
         </DialogHeader>
 
         <div className="max-h-[60vh] overflow-y-auto px-1">
           {step === 1 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 py-4">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-4 py-4 md:grid-cols-2">
               <div className="space-y-1">
-                <Label htmlFor="meterNumber" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="customerName"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Customer Name <span className="text-red-500">*</span>
+                </Label>
+                <Input
+                  type="text"
+                  id="customerName"
+                  name="customerName"
+                  value={formData.customerName}
+                  onChange={handleInputChange}
+                  placeholder="E.g 0404040404040"
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.customerName ? "border-red-500" : ""
+                  }`}
+                  required
+                />
+                {errors.customerName && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.customerName}
+                  </p>
+                )}
+              </div>
+              <div className="space-y-1">
+                <Label
+                  htmlFor="customerAddress"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Customer Address <span className="text-red-500">*</span>
+                </Label>
+                <Input
+                  type="text"
+                  id="customerAddress" 
+                  name="customerAddress" 
+                  value={formData.customerAddress} 
+                  onChange={handleInputChange}
+                  placeholder="E.g 8900080734059874"
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.customerAddress ? "border-red-500" : "" 
+                  }`}
+                  required
+                />
+                {errors.customerAddress && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.customerAddress}
+                  </p>
+                )}{" "}
+              </div>
+              <div className="space-y-1">
+                <Label
+                  htmlFor="meterNumber"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Meter Number <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -501,14 +602,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.meterNumber}
                   onChange={handleInputChange}
                   placeholder="E.g 0404040404040"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.meterNumber ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.meterNumber ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.meterNumber && <p className="text-xs text-red-500 mt-1">{errors.meterNumber}</p>}
+                {errors.meterNumber && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.meterNumber}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="simNumber" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="simNumber"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Sim Card Number <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -518,23 +627,40 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.simNumber} // Corrected value key
                   onChange={handleInputChange}
                   placeholder="E.g 8900080734059874"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.simNumber ? "border-red-500" : "" // Corrected error key
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.simNumber ? "border-red-500" : "" // Corrected error key
+                  }`}
                   required
                 />
-                {errors.simNumber && <p className="text-xs text-red-500 mt-1">{errors.simNumber}</p>} {/* Corrected error key */}
+                {errors.simNumber && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.simNumber}
+                  </p>
+                )}{" "}
+                {/* Corrected error key */}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="meterType" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="meterType"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Meter Type <span className="text-red-500">*</span>
                 </Label>
-                <Select onValueChange={(value) => handleSelectChange("meterType", value)} value={formData.meterType}>
+                <Select
+                  onValueChange={(value) =>
+                    handleSelectChange("meterType", value)
+                  }
+                  value={formData.meterType}
+                >
                   <SelectTrigger
                     id="meterType"
-                    className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.meterType ? "border-red-500" : ""
-                      }`}
+                    className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                      errors.meterType ? "border-red-500" : ""
+                    }`}
                   >
-                    <SelectValue>{formData.meterType || "Select Meter Type"}</SelectValue>
+                    <SelectValue>
+                      {formData.meterType || "Select Meter Type"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Electricity">Electricity</SelectItem>
@@ -542,44 +668,68 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                     <SelectItem value="Gas">Gas</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.meterType && <p className="text-xs text-red-500 mt-1">{errors.meterType}</p>}
+                {errors.meterType && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.meterType}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="meterCategory" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="meterCategory"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Meter Category <span className="text-red-500">*</span>
                 </Label>
                 <Select
-                  onValueChange={(value) => handleSelectChange("meterCategory", value)}
+                  onValueChange={(value) =>
+                    handleSelectChange("meterCategory", value)
+                  }
                   value={formData.meterCategory}
                 >
                   <SelectTrigger
                     id="meterCategory"
-                    className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.meterCategory ? "border-red-500" : ""
-                      }`}
+                    className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                      errors.meterCategory ? "border-red-500" : ""
+                    }`}
                   >
-                    <SelectValue>{formData.meterCategory || "Select Category"}</SelectValue>
+                    <SelectValue>
+                      {formData.meterCategory || "Select Category"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Prepaid">Prepaid</SelectItem>
                     <SelectItem value="Postpaid">Postpaid</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.meterCategory && <p className="text-xs text-red-500 mt-1">{errors.meterCategory}</p>}
+                {errors.meterCategory && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.meterCategory}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="meterClass" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="meterClass"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Meter Class <span className="text-red-500">*</span>
                 </Label>
                 <Select
-                  onValueChange={(value) => handleSelectChange("meterClass", value)}
+                  onValueChange={(value) =>
+                    handleSelectChange("meterClass", value)
+                  }
                   value={formData.meterClass}
                 >
                   <SelectTrigger
                     id="meterClass"
-                    className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.meterClass ? "border-red-500" : ""
-                      }`}
+                    className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                      errors.meterClass ? "border-red-500" : ""
+                    }`}
                   >
-                    <SelectValue>{formData.meterClass || "Select Class"}</SelectValue>
+                    <SelectValue>
+                      {formData.meterClass || "Select Class"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="MD">MD</SelectItem>
@@ -587,27 +737,44 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                     <SelectItem value="Three-Phase">Three-Phase</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.meterClass && <p className="text-xs text-red-500 mt-1">{errors.meterClass}</p>}
+                {errors.meterClass && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.meterClass}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="meterManufacturer" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="meterManufacturer"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Meter Manufacturer <span className="text-red-500">*</span>
                 </Label>
                 <Select
-                  onValueChange={(value) => handleSelectChange("meterManufacturer", value)}
+                  onValueChange={(value) =>
+                    handleSelectChange("meterManufacturer", value)
+                  }
                   value={formData.meterManufacturer}
                 >
                   <SelectTrigger
                     id="meterManufacturer"
-                    className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.meterManufacturer ? "border-red-500" : ""
-                      }`}
+                    className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                      errors.meterManufacturer ? "border-red-500" : ""
+                    }`}
                   >
-                    <SelectValue>{manufacturers?.find(m => m.id === formData.meterManufacturer)?.name ?? "Select Manufacturer"}</SelectValue>
+                    <SelectValue>
+                      {manufacturers?.find(
+                        (m) => m.id === formData.meterManufacturer,
+                      )?.name ?? "Select Manufacturer"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {manufacturers && manufacturers.length > 0 ? (
                       manufacturers.map((manufacturer) => (
-                        <SelectItem key={manufacturer.id} value={manufacturer.id || 'unknown'}>
+                        <SelectItem
+                          key={manufacturer.id}
+                          value={manufacturer.id || "unknown"}
+                        >
                           {manufacturer.name}
                         </SelectItem>
                       ))
@@ -618,10 +785,17 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                     )}
                   </SelectContent>
                 </Select>
-                {errors.meterManufacturer && <p className="text-xs text-red-500 mt-1">{errors.meterManufacturer}</p>}
+                {errors.meterManufacturer && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.meterManufacturer}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="oldSgc" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="oldSgc"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Old SGC <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -631,14 +805,20 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.oldSgc}
                   onChange={handleInputChange}
                   placeholder="Enter Old SGC"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.oldSgc ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.oldSgc ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.oldSgc && <p className="text-xs text-red-500 mt-1">{errors.oldSgc}</p>}
+                {errors.oldSgc && (
+                  <p className="mt-1 text-xs text-red-500">{errors.oldSgc}</p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="newSgc" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="newSgc"
+                  className="text-sm font-medium text-gray-700"
+                >
                   New SGC <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -648,14 +828,20 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.newSgc}
                   onChange={handleInputChange}
                   placeholder="Enter New SGC"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.newSgc ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.newSgc ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.newSgc && <p className="text-xs text-red-500 mt-1">{errors.newSgc}</p>}
+                {errors.newSgc && (
+                  <p className="mt-1 text-xs text-red-500">{errors.newSgc}</p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="oldKrn" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="oldKrn"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Old KRN <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -665,14 +851,20 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.oldKrn}
                   onChange={handleInputChange}
                   placeholder="Enter Old KRN"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.oldKrn ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.oldKrn ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.oldKrn && <p className="text-xs text-red-500 mt-1">{errors.oldKrn}</p>}
+                {errors.oldKrn && (
+                  <p className="mt-1 text-xs text-red-500">{errors.oldKrn}</p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="newKrn" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="newKrn"
+                  className="text-sm font-medium text-gray-700"
+                >
                   New KRN <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -682,14 +874,20 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.newKrn}
                   onChange={handleInputChange}
                   placeholder="Enter New KRN"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.newKrn ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.newKrn ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.newKrn && <p className="text-xs text-red-500 mt-1">{errors.newKrn}</p>}
+                {errors.newKrn && (
+                  <p className="mt-1 text-xs text-red-500">{errors.newKrn}</p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="oldTariffIndex" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="oldTariffIndex"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Old Tariff Index <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -699,14 +897,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.oldTariffIndex}
                   onChange={handleInputChange}
                   placeholder="Enter Old Tariff Index"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.oldTariffIndex ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.oldTariffIndex ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.oldTariffIndex && <p className="text-xs text-red-500 mt-1">{errors.oldTariffIndex}</p>}
+                {errors.oldTariffIndex && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.oldTariffIndex}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="newTariffIndex" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="newTariffIndex"
+                  className="text-sm font-medium text-gray-700"
+                >
                   New Tariff Index <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -716,31 +922,42 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.newTariffIndex}
                   onChange={handleInputChange}
                   placeholder="Enter New Tariff Index"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.newTariffIndex ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.newTariffIndex ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.newTariffIndex && <p className="text-xs text-red-500 mt-1">{errors.newTariffIndex}</p>}
+                {errors.newTariffIndex && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.newTariffIndex}
+                  </p>
+                )}
               </div>
-              <div className="space-y-1 col-span-2">
-                <Label htmlFor="smartMeter" className="text-sm font-medium text-gray-700">
+              <div className="col-span-2 space-y-1">
+                <Label
+                  htmlFor="smartMeter"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Smart Meter
                 </Label>
-                <div className="flex items-center justify-between w-full border border-gray-300 rounded-md px-3 py-2">
+                <div className="flex w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2">
                   <span className="text-sm text-gray-700">Smart</span>
                   <Checkbox
                     id="smartMeter"
                     checked={formData.smartStatus}
                     onCheckedChange={handleCheckboxChange}
-                    className="border-gray-500 rounded-md data-[state=checked]:bg-green-500 data-[state=checked]:text-white focus:ring-green-500 focus:ring-offset-0 focus:ring-1"
+                    className="rounded-md border-gray-500 focus:ring-1 focus:ring-green-500 focus:ring-offset-0 data-[state=checked]:bg-green-500 data-[state=checked]:text-white"
                   />
                 </div>
               </div>
             </div>
           ) : step === 2 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 py-4">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-4 py-4 md:grid-cols-2">
               <div className="space-y-1">
-                <Label htmlFor="ctRatioNum" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="ctRatioNum"
+                  className="text-sm font-medium text-gray-700"
+                >
                   CT Ratio Numerator <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -750,14 +967,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.ctRatioNum}
                   onChange={handleInputChange}
                   placeholder="E.g., 100"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.ctRatioNum ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.ctRatioNum ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.ctRatioNum && <p className="text-xs text-red-500 mt-1">{errors.ctRatioNum}</p>}
+                {errors.ctRatioNum && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.ctRatioNum}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="ctRatioDenom" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="ctRatioDenom"
+                  className="text-sm font-medium text-gray-700"
+                >
                   CT Ratio Denominator <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -767,15 +992,24 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.ctRatioDenom}
                   onChange={handleInputChange}
                   placeholder="E.g., 5"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.ctRatioDenom ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.ctRatioDenom ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.ctRatioDenom && <p className="text-xs text-red-500 mt-1">{errors.ctRatioDenom}</p>}
+                {errors.ctRatioDenom && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.ctRatioDenom}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="voltRatioNum" className="text-sm font-medium text-gray-700">
-                  Voltage Ratio Numerator <span className="text-red-500">*</span>
+                <Label
+                  htmlFor="voltRatioNum"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Voltage Ratio Numerator{" "}
+                  <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="voltRatioNum"
@@ -784,17 +1018,24 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.voltRatioNum}
                   onChange={handleInputChange}
                   placeholder="E.g., 11000"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.voltRatioNum ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.voltRatioNum ? "border-red-500" : ""
+                  }`}
                   required
                 />
                 {errors.voltRatioNum && (
-                  <p className="text-xs text-red-500 mt-1">{errors.voltRatioNum}</p>
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.voltRatioNum}
+                  </p>
                 )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="voltRatioDenom" className="text-sm font-medium text-gray-700">
-                  Voltage Ratio Denominator <span className="text-red-500">*</span>
+                <Label
+                  htmlFor="voltRatioDenom"
+                  className="text-sm font-medium text-gray-700"
+                >
+                  Voltage Ratio Denominator{" "}
+                  <span className="text-red-500">*</span>
                 </Label>
                 <Input
                   id="voltRatioDenom"
@@ -803,16 +1044,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.voltRatioDenom}
                   onChange={handleInputChange}
                   placeholder="E.g., 110"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.voltRatioDenom ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.voltRatioDenom ? "border-red-500" : ""
+                  }`}
                   required
                 />
                 {errors.voltRatioDenom && (
-                  <p className="text-xs text-red-500 mt-1">{errors.voltRatioDenom}</p>
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.voltRatioDenom}
+                  </p>
                 )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="multiplier" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="multiplier"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Multiplier <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -822,14 +1069,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.multiplier}
                   onChange={handleInputChange}
                   placeholder="E.g., 1"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.multiplier ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.multiplier ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.multiplier && <p className="text-xs text-red-500 mt-1">{errors.multiplier}</p>}
+                {errors.multiplier && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.multiplier}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="meterRating" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="meterRating"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Meter Rating <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -839,14 +1094,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.meterRating}
                   onChange={handleInputChange}
                   placeholder="E.g., 100"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.meterRating ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.meterRating ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.meterRating && <p className="text-xs text-red-500 mt-1">{errors.meterRating}</p>}
+                {errors.meterRating && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.meterRating}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="initialReading" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="initialReading"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Initial Reading <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -856,14 +1119,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.initialReading}
                   onChange={handleInputChange}
                   placeholder="E.g., 0"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.initialReading ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.initialReading ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.initialReading && <p className="text-xs text-red-500 mt-1">{errors.initialReading}</p>}
+                {errors.initialReading && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.initialReading}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="dial" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="dial"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Dial <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -873,14 +1144,20 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.dial}
                   onChange={handleInputChange}
                   placeholder="E.g., 5"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.dial ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.dial ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.dial && <p className="text-xs text-red-500 mt-1">{errors.dial}</p>}
+                {errors.dial && (
+                  <p className="mt-1 text-xs text-red-500">{errors.dial}</p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="longitude" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="longitude"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Longitude <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -890,14 +1167,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.longitude}
                   onChange={handleInputChange}
                   placeholder="E.g., 3.8964"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.longitude ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.longitude ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.longitude && <p className="text-xs text-red-500 mt-1">{errors.longitude}</p>}
+                {errors.longitude && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.longitude}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="latitude" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="latitude"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Latitude <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -907,17 +1192,23 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.latitude}
                   onChange={handleInputChange}
                   placeholder="E.g., 7.3775"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.latitude ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.latitude ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.latitude && <p className="text-xs text-red-500 mt-1">{errors.latitude}</p>}
+                {errors.latitude && (
+                  <p className="mt-1 text-xs text-red-500">{errors.latitude}</p>
+                )}
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 py-4">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-4 py-4 md:grid-cols-2">
               <div className="space-y-1">
-                <Label htmlFor="meterModel" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="meterModel"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Meter Model <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -927,14 +1218,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.meterModel}
                   onChange={handleInputChange}
                   placeholder="E.g., SmartMeterX1"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.meterModel ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.meterModel ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.meterModel && <p className="text-xs text-red-500 mt-1">{errors.meterModel}</p>}
+                {errors.meterModel && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.meterModel}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="protocol" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="protocol"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Protocol <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -944,14 +1243,20 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.protocol}
                   onChange={handleInputChange}
                   placeholder="E.g., DLMS/COSEM"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.protocol ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.protocol ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.protocol && <p className="text-xs text-red-500 mt-1">{errors.protocol}</p>}
+                {errors.protocol && (
+                  <p className="mt-1 text-xs text-red-500">{errors.protocol}</p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="authentication" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="authentication"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Authentication <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -961,14 +1266,22 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.authentication}
                   onChange={handleInputChange}
                   placeholder="E.g., Token-based"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.authentication ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.authentication ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.authentication && <p className="text-xs text-red-500 mt-1">{errors.authentication}</p>}
+                {errors.authentication && (
+                  <p className="mt-1 text-xs text-red-500">
+                    {errors.authentication}
+                  </p>
+                )}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Password <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -978,11 +1291,14 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter password"
-                  className={`w-full text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${errors.password ? "border-red-500" : ""
-                    }`}
+                  className={`w-full border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500 ${
+                    errors.password ? "border-red-500" : ""
+                  }`}
                   required
                 />
-                {errors.password && <p className="text-xs text-red-500 mt-1">{errors.password}</p>}
+                {errors.password && (
+                  <p className="mt-1 text-xs text-red-500">{errors.password}</p>
+                )}
               </div>
             </div>
           )}
@@ -995,7 +1311,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                 variant="outline"
                 onClick={onClose}
                 size="md"
-                className="text-sm font-medium text-[#161CCA] border-[#161CCA] hover:bg-gray-50"
+                className="border-[#161CCA] text-sm font-medium text-[#161CCA] hover:bg-gray-50"
               >
                 Cancel
               </Button>
@@ -1017,7 +1333,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                   !formData.newTariffIndex ||
                   isPending
                 }
-                className="text-sm font-medium bg-[#161CCA] text-white hover:bg-[#1e2abf]"
+                className="bg-[#161CCA] text-sm font-medium text-white hover:bg-[#1e2abf]"
               >
                 {/* Updated logic for button text */}
                 {step1ButtonText}
@@ -1029,7 +1345,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                 variant="outline"
                 onClick={handleBack}
                 size="md"
-                className="text-sm font-medium text-[#161CCA] border-[#161CCA] hover:bg-gray-50"
+                className="border-[#161CCA] text-sm font-medium text-[#161CCA] hover:bg-gray-50"
               >
                 Back
               </Button>
@@ -1047,9 +1363,10 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                       !formData.initialReading ||
                       !formData.dial ||
                       !formData.longitude ||
-                      !formData.latitude)) || isPending
+                      !formData.latitude)) ||
+                  isPending
                 }
-                className="text-sm font-medium bg-[#161CCA] text-white hover:bg-[#1e2abf] cursor-pointer"
+                className="cursor-pointer bg-[#161CCA] text-sm font-medium text-white hover:bg-[#1e2abf]"
               >
                 {formData.smartStatus ? "Next" : "Save"}
               </Button>
@@ -1060,7 +1377,7 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                 variant="outline"
                 onClick={handleBack}
                 size="md"
-                className="text-sm font-medium text-[#161CCA] border-[#161CCA] hover:bg-gray-50 cursor-pointer"
+                className="cursor-pointer border-[#161CCA] text-sm font-medium text-[#161CCA] hover:bg-gray-50"
               >
                 Back
               </Button>
@@ -1069,9 +1386,13 @@ export function AddMeterDialog({ isOpen, onClose, onSaveMeter, editMeter }: AddM
                 size="md"
                 disabled={
                   (formData.smartStatus &&
-                    (!formData.meterModel || !formData.protocol || !formData.authentication || !formData.password)) || isPending
+                    (!formData.meterModel ||
+                      !formData.protocol ||
+                      !formData.authentication ||
+                      !formData.password)) ||
+                  isPending
                 }
-                className="text-sm font-medium bg-[#161CCA] text-white hover:bg-[#1e2abf] cursor-pointer"
+                className="cursor-pointer bg-[#161CCA] text-sm font-medium text-white hover:bg-[#1e2abf]"
               >
                 Save
               </Button>

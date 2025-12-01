@@ -56,6 +56,8 @@ export interface MeterInventoryItem {
   };
   id?: string;
   meterNumber: string;
+  customerName: string;
+  customerAddress: string;
   meterManufacturer: string;
   meterClass: string;
   meterType?: string;
