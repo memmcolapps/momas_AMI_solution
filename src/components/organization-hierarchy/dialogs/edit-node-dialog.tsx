@@ -244,65 +244,7 @@ export const EditNodeDialog = ({
               )}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col">
-              <label className="text-sm font-medium">
-                Contact Person Phone Number
-              </label>
-              <Input
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleInputChange}
-                placeholder="Enter Phone Number"
-                className="mt-1 border-gray-300"
-              />
-              {errors.phoneNumber && (
-                <p className="mt-1 text-xs text-red-500">
-                  {errors.phoneNumber}
-                </p>
-              )}
-            </div>
-            <div className="flex flex-col">
-              <label className="text-sm font-medium">
-                Contact Person Email
-              </label>
-              <Input
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter Email"
-                className="mt-1 border-gray-300"
-              />
-              {errors.email && (
-                <p className="mt-1 text-xs text-red-500">{errors.email}</p>
-              )}
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col">
-              <label className="text-sm font-medium">Contact Person Name</label>
-              <Input
-                name="contactPerson"
-                value={formData.contactPerson}
-                onChange={handleInputChange}
-                placeholder="Enter Contact Person"
-                className="mt-1 border-gray-300"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="text-sm font-medium">
-                Contact Person Address
-              </label>
-              <Input
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                placeholder="Enter Address"
-                className="mt-1 border-gray-300"
-              />
-            </div>
-          </div>
-          {isTechnicalNode && (
+                    {isTechnicalNode && (
             <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col">
                 <label className="text-sm font-medium">Asset ID <span className="text-red-500">*</span></label>
@@ -364,7 +306,8 @@ export const EditNodeDialog = ({
               </div>
             </div>
           )}
-          {(nodeType.toLowerCase() === "substation" ||
+
+             {(nodeType.toLowerCase() === "substation" ||
             nodeType.toLowerCase() === "dss" ||
             nodeType.toLowerCase() === "feeder line") && (
             <div className="grid grid-cols-2 gap-4">
@@ -390,6 +333,67 @@ export const EditNodeDialog = ({
               </div>
             </div>
           )}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label className="text-sm font-medium">
+                Contact Person Phone Number
+              </label>
+              <Input
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleInputChange}
+                placeholder="Enter Phone Number"
+                className="mt-1 border-gray-300"
+              />
+              {errors.phoneNumber && (
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.phoneNumber}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm font-medium">
+                Contact Person Email
+              </label>
+              <Input
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Enter Email"
+                className="mt-1 border-gray-300"
+              />
+              {errors.email && (
+                <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+              )}
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col">
+              <label className="text-sm font-medium">Contact Person Name</label>
+              <Input
+                name="contactPerson"
+                value={formData.contactPerson}
+                onChange={handleInputChange}
+                placeholder="Enter Contact Person"
+                className="mt-1 border-gray-300"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-sm font-medium">
+                Contact Person Address
+              </label>
+              <Input
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                placeholder="Enter Address"
+                className="mt-1 border-gray-300"
+              />
+            </div>
+          </div>
+
+       
           {isTechnicalNode && (
             <div className="flex flex-col">
               <label className="text-sm font-medium">Description</label>
