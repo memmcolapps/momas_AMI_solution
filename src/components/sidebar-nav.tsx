@@ -1,7 +1,7 @@
 "use client";
 
 import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub } from "./ui/sidebar";
-import { Activity, ChevronDown, CreditCard, Cylinder } from "lucide-react";
+import { Activity, ChevronDown, CircleGauge, Cylinder, UsersRound, LayoutDashboard,Building2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -30,13 +30,19 @@ const navItems: NavItemProps[] = [
     {
         title: "Dashboard",
         href: "/dashboard",
-        icon: Cylinder,
+        icon: LayoutDashboard,
+        hasSubmenu: false,
+    },
+      {
+        title: "Organization Hierarchy",
+        href: "/organization-hierarchy",
+        icon: Building2,
         hasSubmenu: false,
     },
     {
         title: "Meter Management",
         href: "/meter-management",
-        icon: CreditCard,
+        icon: CircleGauge,
         hasSubmenu: false,
     },
     {
@@ -68,7 +74,7 @@ const navItems: NavItemProps[] = [
             },
         ],
     },
-    { title: "Admin Management", href: "/admin-management", icon: Activity, hasSubmenu: false },
+    { title: "Admin Management", href: "/admin-management", icon: UsersRound, hasSubmenu: false },
     { title: "Audit Log", href: "/audit-log", icon: Activity, hasSubmenu: false },
 ];
 
@@ -78,6 +84,11 @@ const hardcodedUser = {
         modules: [
             {
                 name: "Dashboard",
+                access: true,
+                subModules: [],
+            },
+            {
+                name: "Organization Hierarchy",
                 access: true,
                 subModules: [],
             },
