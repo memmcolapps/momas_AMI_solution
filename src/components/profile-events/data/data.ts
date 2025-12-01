@@ -166,12 +166,6 @@ export interface Node {
   nodesTree?: Node[];
 }
 
-export interface FormData {
-  name: string;
-  type: string;
-  [key: string]: unknown;
-}
-
 export const DUMMY_NODES: Node[] = [
   {
     id: "1",
