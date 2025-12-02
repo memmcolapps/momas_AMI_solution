@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
-interface FormData {
+export interface FormData {
   name: string;
   regionId: string;
   serialNo: string;

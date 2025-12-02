@@ -22,8 +22,8 @@ import {
   Lightbulb,
 } from "lucide-react";
 import { toast } from "sonner";
-import { type NodeInfo, type Node, type FormData, DUMMY_NODES } from "../profile-events/data/data";
-import { AddNodeDialog } from "./dialogs/add-node-dialog";
+import { type NodeInfo, type Node, DUMMY_NODES } from "../profile-events/data/data";
+import { AddNodeDialog, type FormData } from "./dialogs/add-node-dialog";
 import { EditNodeDialog } from "./dialogs/edit-node-dialog";
 
 
@@ -50,10 +50,20 @@ const renderNodeIcon = (type?: string) => {
 
 const mapNodeInfoToFormData = (nodeInfo?: NodeInfo): FormData => {
   return {
-    name: nodeInfo?.name ?? "",
-    type: nodeInfo?.type ?? "",
-    ...nodeInfo,
-  };
+  name: '',
+  regionId: "",
+  serialNo: "",
+  phoneNumber: "",
+  email: "",
+  contactPerson: "",
+  address: "",
+  status: "",
+  voltage: "",
+  longitude: "",
+  latitude: "",
+  description: "",
+  assetId: ""
+};
 };
 
 const getNormalizedDisplayType = (type?: string): string => {
@@ -61,7 +71,6 @@ const getNormalizedDisplayType = (type?: string): string => {
   return type;
 };
 
-// OrganizationNode Component with dialogs
 interface OrganizationNodeProps {
   node: Node;
   level?: number;
@@ -214,4 +223,4 @@ const OrganizationalTree = () => {
   );
 };
 
-export default OrganizationalTree;
+export default OrganizationNode;
