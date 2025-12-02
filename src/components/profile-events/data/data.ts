@@ -78,13 +78,18 @@ export const communicationReportMergedDummyData: CommunicationReportData[] = [
     meterNo: "6212456987",
     meterModel: "MMX 310 -NG",
     status: "Offline",
+    lastSync: "1:32am",
+    tamperState: "Tampered",
+    tamperSync: "2025-11-18 17:30:12",
+    relayControl: "Connected",
+    relaySync: "2025-11-18 19:10:47",
+    location: "KM 40, Lagos - Ibadan Expressway, Ogun",
   },
   {
     serialNumber: "SNMD0004",
     meterNo: "6212456987",
     meterModel: "MMX 310 -NG",
     lastSync: "1:32am",
-
     tamperState: "Tampered",
     tamperSync: "2025-11-18 17:30:12",
     relayControl: "Connected",
@@ -99,7 +104,6 @@ export const communicationReportMergedDummyData: CommunicationReportData[] = [
     meterNo: "6212456987",
     meterModel: "MMX 310 -NG",
     lastSync: "1:32am",
-
     tamperState: "Tampered",
     tamperSync: "2025-11-18 17:30:12",
     relayControl: "Disconnected",
@@ -112,7 +116,6 @@ export const communicationReportMergedDummyData: CommunicationReportData[] = [
     meterNo: "6212456987",
     meterModel: "MMX 310 -NG",
     lastSync: "1:32am",
-
     tamperState: "Tampered",
     tamperSync: "2025-11-18 17:30:12",
     relayControl: "Connected",
@@ -125,7 +128,6 @@ export const communicationReportMergedDummyData: CommunicationReportData[] = [
     meterNo: "6212456987",
     meterModel: "MMX 310 -NG",
     lastSync: "1:32am",
-
     tamperState: "Tampered",
     tamperSync: "2025-11-18 17:30:12",
     relayControl: "Disconnected",
@@ -138,7 +140,6 @@ export const communicationReportMergedDummyData: CommunicationReportData[] = [
     meterNo: "6212456987",
     meterModel: "MMX 310 -NG",
     lastSync: "1:32am",
-
     tamperState: "Tampered",
     tamperSync: "2025-11-18 17:30:12",
     relayControl: "Connected",

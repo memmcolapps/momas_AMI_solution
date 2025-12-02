@@ -40,15 +40,9 @@ const filterSections = [
 ];
 
 export default function CommunicationReportPage() {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [reportType, setReportType] = useState<"daily" | "monthly">("daily");
+  const [IsGetReportDialogOpen, setIsGetReportDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"MD" | "Non-MD">("MD");
   const [searchQuery, setSearchQuery] = useState("");
-
-  const handleOpenDialog = (type: "daily" | "monthly") => {
-    setReportType(type);
-    setOpenDialog(true);
-  };
 
   return (
     <div className="p-6">
@@ -58,33 +52,20 @@ export default function CommunicationReportPage() {
           description="View and analyze detailed historical data from your smart meter"
         />
         <div className="flex items-center space-x-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                className="cursor-pointer border-none bg-[#161CCA] py-6 font-medium text-white"
-                variant="secondary"
-                size="lg"
-              >
-                <NotepadText size={14} />
-                Get Report
-                <ChevronDown className="ml-2" size={14} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full p-3 shadow-lg">
-              <DropdownMenuItem
-                onClick={() => handleOpenDialog("daily")}
-                className="text-md cursor-pointer font-medium"
-              >
-                Daily Report
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleOpenDialog("monthly")}
-                className="text-md cursor-pointer font-medium"
-              >
-                Monthly Report
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex">
+            <Button
+              className="cursor-pointer border-none bg-[#161CCA] py-6 font-medium text-white"
+              variant="secondary"
+              size="lg"
+              onClick={() => {
+                setIsGetReportDialogOpen(true);
+              }}
+            >
+              <NotepadText size={14} />
+              Get Report
+              <ChevronDown className="ml-2" size={14} />
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -174,9 +155,8 @@ export default function CommunicationReportPage() {
       </div>
       <CommunicationTable searchQuery={searchQuery} activeTab={activeTab} />
       <DailyReportDialog
-        open={openDialog}
-        onOpenChange={setOpenDialog}
-        reportType={reportType}
+        open={IsGetReportDialogOpen}
+        onOpenChange={setIsGetReportDialogOpen}
       />
     </div>
   );

@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { BanIcon, CircleCheck, EllipsisVertical, SendIcon } from "lucide-react";
+import { EllipsisVertical, Eye } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { PaginationControls } from "@/components/ui/pagination_controls";
 import {
@@ -35,20 +34,17 @@ import { getStatusStyle } from "../statusStyle";
 interface CommunicationTableProps {
   searchQuery?: string;
   activeTab?: "MD" | "Non-MD";
+  onMeterSelect?: (meterNumber: string) => void;
 }
 
 export function CommunicationTable({
   searchQuery = "",
   activeTab = "MD",
+  // onMeterSelect,
 }: CommunicationTableProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedRow, setSelectedRow] =
-    useState<CommunicationReportData | null>(null);
+  const [selectedRow, setSelectedRow] = useState<CommunicationReportData | null>(null);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
-
-  const [isTokenDialogOpen, setIsTokenDialogOpen] = useState(false);
-  const [token, setToken] = useState("");
-  const [meterToTokenize, setMeterToTokenize] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -120,70 +116,9 @@ export function CommunicationTable({
     }
   };
 
-  const handleConnectRelay = (serialNumber: string) => {
-    const meterData = paginatedData.find(
-      (item) => item.serialNumber === serialNumber,
-    );
-
-    if (meterData) {
-      const updatedMeter = {
-        ...meterData,
-        status: "Online",
-        relayControl: "Connected",
-      };
-
-      setModifiedData((prev) => {
-        const newMap = new Map(prev);
-        newMap.set(serialNumber, updatedMeter);
-        return newMap;
-      });
-
-      if (selectedRow?.serialNumber === serialNumber) {
-        setSelectedRow(updatedMeter);
-      }
-
-      toast.success(`Successfully connected relay for meter ${serialNumber}`);
-    }
-  };
-
-  const handleDisconnectRelay = (serialNumber: string) => {
-    const meterData = paginatedData.find(
-      (item) => item.serialNumber === serialNumber,
-    );
-
-    if (meterData) {
-      const updatedMeter = {
-        ...meterData,
-        status: "Offline",
-        relayControl: "Disconnected",
-      };
-
-      setModifiedData((prev) => {
-        const newMap = new Map(prev);
-        newMap.set(serialNumber, updatedMeter);
-        return newMap;
-      });
-
-      if (selectedRow?.serialNumber === serialNumber) {
-        setSelectedRow(updatedMeter);
-      }
-
-      toast.error(`Successfully disconnected relay for meter ${serialNumber}`);
-    }
-  };
-
-  const handleSendToken = (serialNumber: string) => {
-    setMeterToTokenize(serialNumber);
-    setIsTokenDialogOpen(true);
-  };
-
-  const handleTokenSubmit = () => {
-    console.log(`Sending token: ${token} to meter: ${meterToTokenize}`);
-    toast.success(`Successfully sent token to meter ${meterToTokenize}`);
-
-    setToken("");
-    setMeterToTokenize(null);
-    setIsTokenDialogOpen(false);
+  const handleViewDetails = (row: CommunicationReportData) => {
+    setSelectedRow(row);
+    setDialogOpen(true);
   };
 
   const hasMeterModel =
@@ -272,35 +207,13 @@ export function CommunicationTable({
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-full shadow-lg">
-                      {row.status === "Offline" ? (
-                        <DropdownMenuItem
-                          className="cursor-pointer py-3"
-                          onClick={() => handleConnectRelay(row.serialNumber)}
-                        >
-                          <CircleCheck size={14} className="mr-2" /> Connect
-                          Relay
-                        </DropdownMenuItem>
-                      ) : (
-                        <>
-                          <DropdownMenuItem
-                            className="cursor-pointer py-3"
-                            onClick={() =>
-                              handleDisconnectRelay(row.serialNumber)
-                            }
-                          >
-                            <BanIcon size={14} className="mr-2" /> Disconnect
-                            Relay
-                          </DropdownMenuItem>
-                          <hr className="border-gray-200" />
-
-                          <DropdownMenuItem
-                            className="cursor-pointer py-3"
-                            onClick={() => handleSendToken(row.serialNumber)}
-                          >
-                            <SendIcon size={14} className="mr-2" /> Send Token
-                          </DropdownMenuItem>
-                        </>
-                      )}
+                      <DropdownMenuItem
+                        onClick={() => handleViewDetails(row)}
+                        className="cursor-pointer py-2"
+                      >
+                        <Eye size={14} className="mr-2" />
+                        View Details
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
@@ -322,12 +235,12 @@ export function CommunicationTable({
 
       {/* View Details Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="h-fit w-full rounded-lg bg-white p-10">
+        <DialogContent className="h-fit md:max-w-2xl rounded-lg bg-white p-12">
           <DialogHeader>
-            <DialogTitle>View Details</DialogTitle>
+            <DialogTitle className="mb-2">View Details</DialogTitle>
           </DialogHeader>
           {selectedRow && (
-            <div className="grid gap-4 py-4 text-sm">
+            <div className="grid gap-4 py-4 px-4 text-sm">
               <div className="grid grid-cols-2 gap-2">
                 <Label>Meter Number:</Label>
                 <span className="font-semibold">{selectedRow.meterNo}</span>
@@ -340,6 +253,10 @@ export function CommunicationTable({
                   </span>
                 </div>
               )}
+                <div className="grid grid-cols-2 gap-2">
+                <Label>Location:</Label>
+                <span className="font-semibold">{selectedRow.location}</span>
+              </div>
               <div className="grid grid-cols-2 gap-2">
                 <Label>Status:</Label>
                 <span className="font-semibold">{selectedRow.status}</span>
@@ -354,57 +271,8 @@ export function CommunicationTable({
                 <Label>Last Sync:</Label>
                 <span className="font-semibold">{selectedRow.lastSync}</span>
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Label>Location:</Label>
-                <span className="font-semibold">{selectedRow.location}</span>
-              </div>
             </div>
           )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Send Token Dialog */}
-      <Dialog open={isTokenDialogOpen} onOpenChange={setIsTokenDialogOpen}>
-        <DialogContent className="h-fit w-full rounded-lg bg-white p-6">
-          <DialogHeader className="mb-4">
-            <DialogTitle className="text-lg">Send Token</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4 text-sm">
-            <div className="flex flex-col space-y-2">
-              <Label htmlFor="token">
-                Token <span className="text-red-500">*</span>
-              </Label>
-              <input
-                id="token"
-                type="text"
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-                placeholder="Enter Token"
-                className="rounded-md border border-gray-300 p-2 focus:border-transparent focus:ring-2 focus:ring-[#161CCA]/50 focus:outline-none"
-              />
-            </div>
-          </div>
-          <div className="mt-4 flex justify-between gap-2">
-            <Button
-              size={"md"}
-              variant="outline"
-              className="cursor-pointer border-[#161CCA] text-[#161CCA]"
-              onClick={() => {
-                setIsTokenDialogOpen(false);
-                setToken("");
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              size={"md"}
-              className="cursor-pointer bg-[#161CCA] text-white"
-              onClick={handleTokenSubmit}
-              disabled={token.length === 0}
-            >
-              Proceed
-            </Button>
-          </div>
         </DialogContent>
       </Dialog>
     </div>
